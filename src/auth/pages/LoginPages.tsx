@@ -5,6 +5,8 @@ import { FaTiktok, FaInstagram, FaFacebookF, FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useAuthStore } from "../store/auth.store";
+import imgLogo from "../../assets/gutimotos.svg";
+import { Spinner } from "@/components/ui/spinner";
 
 export const LoginPages = () => {
   const [isposting, setIsposting] = useState(false);
@@ -24,22 +26,32 @@ export const LoginPages = () => {
   };
 
   const redirectToExternal = (url: string) => {
-  window.open(url, "_blank", "noopener,noreferrer");
-};
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   return (
-    <div className={"flex flex-col gap-6"}>
-      <Card className="overflow-hidden p-0  ">
-        <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
-            <div className="flex flex-col gap-6 min-h-[400px]  justify-between">
-              <div className="flex flex-col items-center text-center">
-                <CustomLogo />
+    <>
+      {isposting && (
+        <div className="fixed inset-0 z-50 bg-black/60">
+          <div className="w-full h-screen flex justify-center items-center">
+            <Spinner className="size-8 text-[#bf2829]" />
+          </div>
+        </div>
+      )}
+      <div className={"flex flex-col gap-6"}>
+        <Card className="overflow-hidden p-0  ">
+          <CardContent className="grid p-0 md:grid-cols-2">
+            <form className="p-6 md:p-8">
+              <div className="flex flex-col gap-6 min-h-[400px]  justify-between">
+                <div className="flex flex-col items-center text-center">
+                  <CustomLogo />
 
-                <p className="text-sm text-muted-foreground">
-                  Somos una concesionaria con las mejores marcas de motocicletas y repuestos, piezas, accesorios. ofreciendo con soporte y servicios técnico especializado
-                </p>
-              </div>
+                  <h2 className="text-sm text-muted-foreground">
+                    En Tarija, somos tu concesionaria de confianza con las mejores marcas de
+                    motocicletas, repuestos, piezas y accesorios. Contamos con
+                    soporte y servicio técnico especializado para brindarte la mejor experiencia, <span className='text-black'>nuestra prioridad es tu satisfacción</span>.
+                  </h2>
+                </div>
 
               <Button
                 onClick={handlelogin}
@@ -75,8 +87,8 @@ export const LoginPages = () => {
           </form>
           <div className="relative hidden bg-muted md:block">
             <img
-              src="https://i0.wp.com/haojuemotos.pe/wp-content/uploads/2021/12/consejos-para-viaje-en-moto-Haojue-Motos-Peru.jpg?w=1140&ssl=1"
-              alt="Image"
+              src={imgLogo}
+              alt="logo Gutimotos"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
           </div>
@@ -86,5 +98,6 @@ export const LoginPages = () => {
         Bienvenido a nuestra plataforma
       </div>
     </div>
+    </>
   );
 };

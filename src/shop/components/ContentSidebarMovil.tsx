@@ -25,7 +25,7 @@ export const ContentSidebarMovil = ({ onClose }: Props) => {
             path === "" && "underline underline-offset-4"
           } `}
         >
-          Motos
+          Motocicletas
         </Link>
         <Separator />
         <Link
@@ -34,7 +34,7 @@ export const ContentSidebarMovil = ({ onClose }: Props) => {
             path === "spareparts" && "underline underline-offset-4"
           }`}
         >
-          Repuesto
+          Repuestos
         </Link>
         <Separator />
       </div>

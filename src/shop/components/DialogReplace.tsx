@@ -6,20 +6,28 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { FaWhatsapp } from "react-icons/fa";
 
 import { useAuthStore } from "@/auth/store/auth.store";
 import { ConentSkeleton } from "./ConentSkeleton";
 import { useDetailReplacement } from "../hooks/useDetailReplacement";
 import { DetailReplacement } from "./DetailReplacement";
+import { useQuotesStore, type Article } from "../store/quotes.store";
+import { toast } from "react-toastify";
 interface Props {
   product_description: string;
+  detail:string,
   open: boolean;
   setOpen: (open: boolean) => void;
 }
 
-export const DialogReplace = ({ open, setOpen,product_description }: Props) => {
+export const DialogReplace = ({
+  open,
+  setOpen,
+  product_description,
+  detail
+}: Props) => {
   const { data, isLoading } = useDetailReplacement();
+  const { addArticle } = useQuotesStore();
   const { user } = useAuthStore();
   const handleRedirectTowhatsapp = () => {
     const phoneNumber = "59167398260";
@@ -32,6 +40,22 @@ export const DialogReplace = ({ open, setOpen,product_description }: Props) => {
       message
     )}`;
     window.open(url, "_blank");
+  };
+
+  const handleAddToQuotes = () => {
+    if (!data?.data) return;
+    const newArticle: Article = {
+      motorcycle_type: product_description,
+      photo: data.data.photos[0].photo || "",
+      brand: detail,
+      amount: 1,
+      code: data.data.product_code.toString(),
+    };
+    addArticle(newArticle);
+    toast.success("Item agregado a la cotizacion", {
+      position: "top-right",
+      autoClose: 2000,
+    });
   };
 
   return (
@@ -48,18 +72,37 @@ export const DialogReplace = ({ open, setOpen,product_description }: Props) => {
           {isLoading ? (
             <ConentSkeleton />
           ) : (
-            data?.data && <DetailReplacement data={data?.data} description={product_description}/>
+            data?.data && (
+              <DetailReplacement
+                data={data?.data}
+                description={product_description}
+              />
+            )
           )}
-          <div className="flex justify-end">
-            {!isLoading && (
+          {!isLoading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-5">
+              {/* <Button
+              className="w-full cursor-pointer"
+              variant="outline"
+              onClick={() => setOpen(false)}
+            >
+              Cerrar
+            </Button> */}
               <Button
-                className=" rounded-full cursor-pointer size-12 bg-[#25d366] hover:bg-[#25d366]"
+                variant="outline"
+                className="cursor-pointer"
+                onClick={() => handleAddToQuotes()}
+              >
+                Agregar a lista de cotizaciones
+              </Button>
+              <Button
+                className="cursor-pointer"
                 onClick={() => handleRedirectTowhatsapp()}
               >
-                <FaWhatsapp size={30} />
+                Cotizar repuesto
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>

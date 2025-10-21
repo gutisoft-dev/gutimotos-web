@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "react-router";
 import { useBrands } from "../hooks/useBrands";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Spinner } from "@/components/ui/spinner";
 interface Props {
   type: string;
 }
 
 export const FilterBrands = ({type}:Props) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useBrands(type);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage,isLoading } = useBrands(type);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentbrand = searchParams.get("brand") || "";
@@ -48,6 +49,9 @@ export const FilterBrands = ({type}:Props) => {
         className="w-full cursor-pointer"
         variant="secondary"
       >
+        {
+          isLoading ||isFetchingNextPage  && <Spinner className="size-3" />
+        }
         Ver mas
       </Button>
     </div>

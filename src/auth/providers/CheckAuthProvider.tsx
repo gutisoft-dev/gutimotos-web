@@ -11,7 +11,7 @@ export const CheckAuthProvider = ({ children }: PropsWithChildren) => {
     queryFn: checkAuthStatus,
     retry: false,
     refetchInterval: 1000 * 60 * 30,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
   if (isLoading) return <CustomFullScreenLoading />;
   if (isError) return <Navigate to="/auth/login" />;

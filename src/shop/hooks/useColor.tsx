@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getColors } from "../actions/get-color.action";
 
 export const useColor = () => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, } =
     useInfiniteQuery({
       initialPageParam: 1,
       queryKey: ["color"],

@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate, useSearchParams } from "react-router";
 import { useProductStore } from "../store/product.store";
 import { ContentImg } from "./ContentImg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 interface Props {
   id: number;
   motorcycle_file: number;
@@ -38,20 +39,20 @@ export const ProductCard = ({
   };
 
   return (
-    <Card className="group rounded-md border shadow-none product-card-hover cursor-pointer ">
-      <CardContent className={`p-0 ${viewMode === "list" && "flex flex-row"} `}>
+    <Card className="group rounded-md border shadow-none product-card-hover cursor-pointer h-full">
+      <CardContent className={`p-0 h-full ${viewMode === "list" && "flex flex-row"} `}>
         <div className="relative aspect-square overflow-hidden bg-muted rounded-md  border m-2">
-          {/* <LazyLoadImage
+          <LazyLoadImage
             src={photo} 
             className={`${viewMode === "list" ? "w-50 h-50" : "w-full h-full"} object-cover transition-transform duration-300 group-hover:scale-105`}
-          /> */}
+          />
 
-          <ContentImg
+          {/* <ContentImg
             source={photo}
             height={`${
               viewMode === "list" ? "w-50 h-50" : "w-full h-full"
             } object-cover transition-transform duration-300 group-hover:scale-105`}
-          />
+          /> */}
           <div className="image-overlay " />
         </div>
 
@@ -73,7 +74,7 @@ export const ProductCard = ({
               onClick={() => handleOpenDialog()}
               className=" cursor-pointer  transition-all duration-300 hover:bg-primary hover:text-primary-foreground border-primary/20 text-xs px-4 py-2 h-8"
             >
-              Descubrelo ahora
+              Ver precio y fotos
             </Button>
           </div>
         </div>

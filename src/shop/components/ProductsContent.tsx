@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useSearchParams } from "react-router";
 import type { Product } from "../interfaces/Products.response";
 import { Button } from "@/components/ui/button";
-import {  IoMdGrid } from "react-icons/io";
+import { IoMdGrid } from "react-icons/io";
 import { FaListUl } from "react-icons/fa";
 import { FilterSidebar } from "./FilterSidebar";
 import { ProductCard } from "./ProductCard";
 import { EmptyContent } from "./EmptyContent";
 import { DialogProduct } from "./DialogProduct";
 import { ContentLoading } from "./ContentLoading";
+import { IoCloseOutline } from "react-icons/io5";
 interface Props {
   products: Product[];
   isloading: boolean;
@@ -31,10 +32,15 @@ export const ProductsContent = ({ products, isloading }: Props) => {
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
-              <h2 className="text-3xl font-light">Motos</h2>
-              <span className="text-muted-foreground">
+              <h4 className="text-2xl font-light">Motocicletas</h4>
+              {
+                /**
+                 <span className="text-muted-foreground">
                 ({products.length} motos)
-              </span>
+                </span>
+                 */
+              }
+              
             </div>
 
             <div className="flex items-center space-x-2">
@@ -77,16 +83,22 @@ export const ProductsContent = ({ products, isloading }: Props) => {
 
             {/* Mobile Filters */}
             {showFilters && (
-              <div className="fixed inset-0 z-50 bg-black/60">
-                <div className="fixed  w-80 overflow-y-auto inset-0 z-50 bg-background p-4 lg:hidden">
-                  <div className="flex items-center justify-between mb-6">
+              <div
+                className="fixed inset-0 z-50 bg-black/60"
+                onClick={() => setShowFilters(false)} 
+              >
+                <div
+                  className="fixed w-80 overflow-y-auto inset-0 z-50 bg-background pr-4 pl-4 lg:hidden"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex items-center justify-between mb-6 sticky top-0 left-0 right-0 bg-background h-15">
                     <h3 className="text-lg font-semibold">Filtros</h3>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setShowFilters(false)}
                     >
-                      cerrar
+                    <IoCloseOutline className="h-4 w-4" />
                     </Button>
                   </div>
                   <FilterSidebar type="motorcycle" />
@@ -104,8 +116,8 @@ export const ProductsContent = ({ products, isloading }: Props) => {
                 <div
                   className={
                     viewMode === "grid"
-                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6"
-                      : "space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-6"
+                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5"
+                      : "space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-5"
                   }
                 >
                   {products.map((product) => (

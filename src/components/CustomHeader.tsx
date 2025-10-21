@@ -9,12 +9,26 @@ import {
   ContentSidebarMovil,
   ContentSidebarMovilUser,
 } from "@/shop/components/ContentSidebarMovil";
+import { IoBagOutline, IoCloseOutline } from "react-icons/io5";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+
+} from "@/components/ui/drawer";
+import { useQuotesStore } from "@/shop/store/quotes.store";
+import { CardItem } from "@/shop/components/CardItem";
 export const CustomHeader = () => {
   const { authStatus } = useAuthStore();
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [showFilters, setShowFilters] = useState(false);
-
+  const { articles } = useQuotesStore();
   const hanleClose = async () => {
     setShowFilters(false);
   };
@@ -34,7 +48,7 @@ export const CustomHeader = () => {
                   path === "" && "underline underline-offset-4"
                 } `}
               >
-                Motos
+                Motocicletas
               </Link>
               <Link
                 to="/spareparts"
@@ -42,12 +56,22 @@ export const CustomHeader = () => {
                   path === "spareparts" && "underline underline-offset-4"
                 }`}
               >
-                Repuesto
+                Repuestos
               </Link>
             </nav>
 
             {/* Search and Cart */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center  space-x-4">
+               <div className="flex flex-col gap-8">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full cursor-pointer"
+                  onClick={() => setOpen(true)}
+                >
+                  <IoBagOutline />
+                </Button>
+              </div>
               {authStatus === "authenticated" ? (
                 <div
                   className="md:hidden"
@@ -62,12 +86,12 @@ export const CustomHeader = () => {
                     size="sm"
                     className="ml-2 cursor-pointer"
                   >
-                    Obtener Catalogo
+                    Obtener Catálogo
                   </Button>
                 </Link>
               )}
-
-              <div className="hidden md:block">
+             
+              <div className="hidden md:flex md:justify-center ">
                 {authStatus === "authenticated" ? (
                   <AvatarUser />
                 ) : (
@@ -77,7 +101,7 @@ export const CustomHeader = () => {
                       size="sm"
                       className="ml-2 cursor-pointer"
                     >
-                      Obtener Catalogo
+                      Obtener Catálogo
                     </Button>
                   </Link>
                 )}
@@ -99,6 +123,43 @@ export const CustomHeader = () => {
           <ContentSidebarMovil onClose={hanleClose} />
         </div>
       )}
+
+      <Drawer direction="right" open={open} onOpenChange={setOpen}>
+        <DrawerContent>
+          <div className="mx-auto w-full max-w-sm">
+            <DrawerHeader>
+              <div className="flex  justify-between ">
+                <div>
+                  <DrawerTitle>Lista</DrawerTitle>
+                  <DrawerDescription>
+                    agrega los articulos que quieras cotizar
+                  </DrawerDescription>
+                </div>
+                <div>
+                  <DrawerClose asChild>
+                    <IoCloseOutline size={20} className="cursor-pointer" />
+                  </DrawerClose>
+                </div>
+              </div>
+            </DrawerHeader>
+            <div className="p-4 pb-0 h-[calc(100vh-150px)] flex flex-col items-center overflow-y-scroll">
+              {articles.length === 0 && (
+                <em className="text-muted-foreground text-[0.70rem] ">
+                  lista vacia
+                </em>
+              )}
+
+              {articles.length > 0 &&
+                articles.map((item, index) => (
+                  <CardItem key={index} {...item} />
+                ))}
+            </div>
+            <DrawerFooter>
+              <Button>Cotizar lista</Button>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };
