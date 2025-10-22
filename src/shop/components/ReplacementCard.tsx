@@ -5,7 +5,6 @@ import { useNavigate, useSearchParams } from "react-router";
 import { useProductStore } from "../store/product.store";
 import clsx from "clsx";
 import { ContentImg } from "./ContentImg";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface Props {
   id: number;
@@ -16,7 +15,6 @@ interface Props {
   measure_name: string;
   product_description: string;
   calculated_price: number;
-  setdetail: (description: string) => void;
   setOpenDialog: (open: boolean) => void;
   setProduct_description: (description: string) => void;
 }
@@ -30,7 +28,6 @@ export const ReplacementCard = ({
   measure_name,
   calculated_price,
   setOpenDialog,
-  setdetail,
   setProduct_description,
 }: Props) => {
   const navigate = useNavigate();
@@ -48,7 +45,6 @@ export const ReplacementCard = ({
     setIdSlug(id.toString());
     setProduct(id.toString());
     setProduct_description(product_description);
-    setdetail(`${brand_name || ""} ${brand_name ? "-":""} ${measure_name}`)
     setOpenDialog(true);
   };
 
@@ -59,26 +55,27 @@ export const ReplacementCard = ({
           viewMode === "list" ? "flex flex-row" : "flex flex-col"
         }`}
       >
+        {/* Imagen */}
         <div
           className={clsx(
             "relative overflow-hidden bg-muted  rounded-md  border m-2",
             viewMode === "list" ? "w-50 h-50" : "aspect-square"
           )}
         >
-          <LazyLoadImage
+          {/* <LazyLoadImage
             src={photo}
             className={clsx(
               viewMode === "list" ? "w-50 h-50" : "w-full h-full",
               "object-cover transition-transform duration-300 group-hover:scale-105"
             )}
-          />
+          /> */}
 
-          {/* <ContentImg
+          <ContentImg
             source={photo}
             height={`${
               viewMode === "list" ? "w-50 h-50" : "w-full h-full"
             } object-cover transition-transform duration-300 group-hover:scale-105`}
-          /> */}
+          />
           <div className="image-overlay" />
         </div>
 
@@ -110,7 +107,7 @@ export const ReplacementCard = ({
               onClick={handleOpenDialog}
               className="cursor-pointer transition-all duration-300 hover:bg-primary hover:text-primary-foreground border-primary/20 text-xs px-4 py-2 h-8"
             >
-              Explorar producto
+              Descubrelo ahora
             </Button>
           </div>
         </div>

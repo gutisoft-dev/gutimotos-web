@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { Button } from "@/components/ui/button";
 import { IoIosSearch, IoMdGrid } from "react-icons/io";
@@ -10,7 +10,6 @@ import type { Replacement } from "../interfaces/Replacement.response";
 import { ReplacementCard } from "./ReplacementCard";
 import { DialogReplace } from "./DialogReplace";
 import { Input } from "@/components/ui/input";
-import { IoCloseOutline } from "react-icons/io5";
 interface Props {
   replacements: Replacement[];
   isloading: boolean;
@@ -18,8 +17,6 @@ interface Props {
 export const ReplacementContent = ({ replacements, isloading }: Props) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [product_description, setProduct_description] = useState("");
-  const [detail, setDetail] = useState("");
-
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
@@ -33,19 +30,16 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
   return (
     <>
       <section className="py-12 px-4 lg:px-8">
-        
+        <div className="mb-8 lg:hidden">
+          <SearchButton />
+        </div>
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
-              <h4 className="text-3xl font-light">Repuestos</h4>
-              {
-                /**
-                <span className="text-muted-foreground">
-                  ({replacements.length} repuestos)
-                </span>
-                 */
-              }
-              
+              <h2 className="text-3xl font-light">Repuestos</h2>
+              <span className="text-muted-foreground">
+                ({replacements.length} repuestos)
+              </span>
             </div>
             <div className="w-90 hidden lg:flex">
               <SearchButton />
@@ -81,11 +75,6 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
                 </Button>
               </div>
             </div>
-            
-          </div>
-          {/* Oculta Search Button para dispositivos con pantalla lg */}
-          <div className="mb-8 lg:hidden">
-            <SearchButton />
           </div>
 
           <div className="flex gap-8">
@@ -96,22 +85,16 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
 
             {/* Mobile Filters */}
             {showFilters && (
-              <div
-                className="fixed inset-0 z-50 bg-black/60"
-                onClick={() => setShowFilters(false)} 
-              >
-                <div
-                  className="fixed w-80 overflow-y-auto inset-0 z-50 bg-background pr-4 pl-4 lg:hidden"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="flex items-center justify-between mb-6 sticky top-0 left-0 right-0 bg-background h-15">
+              <div className="fixed inset-0 z-50 bg-black/60">
+                <div className="fixed w-80 inset-0 z-50 bg-background p-4 lg:hidden overflow-y-auto">
+                  <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-semibold">Filtros</h3>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setShowFilters(false)}
                     >
-                    <IoCloseOutline className="h-4 w-4" />
+                      cerrar
                     </Button>
                   </div>
                   <FilterSidebar replacement={true} type="sparepart" />
@@ -129,8 +112,8 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
                 <div
                   className={
                     viewMode === "grid"
-                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5"
-                      : "space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-5"
+                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6"
+                      : "space-y-4 grid grid-cols-1 sm:grid-cols-2"
                   }
                 >
                   {replacements.map((product) => (
@@ -146,7 +129,6 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
                       calculated_price={product.calculated_price}
                       setOpenDialog={setOpenDialog}
                       setProduct_description={setProduct_description}
-                      setdetail={setDetail}
                     />
                   ))}
                 </div>
@@ -159,7 +141,6 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
           open={openDialog}
           setOpen={setOpenDialog}
           product_description={product_description}
-          detail={detail}
         />
       </section>
     </>
@@ -168,39 +149,20 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
 
 export const SearchButton = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const searchValue = searchParams.get("search") || "";
-  const [searchInput, setSearchInput] = useState(searchValue);
   const handleSearchChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchInput(value);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      searchParams.set("search", value);
-      setSearchParams(searchParams);
-    }, 600);
-  };
-
-  const handleClear = async ()=>{
-    setSearchInput("");
-    searchParams.delete("search");
+    searchParams.set("search", e.target.value);
     setSearchParams(searchParams);
-  }
+  };
 
   return (
     <div className="flex w-full items-center space-x-2">
       <div className="relative w-full">
         <IoIosSearch className="absolute top-1/2 left-3 -translate-y-1/2" />
         <Input
-          placeholder="Buscar por marca descripción o código"
+          placeholder="Buscar repuestos..."
           className="pl-9 h-9 bg-white"
           onChange={handleSearchChanged}
-          value={searchInput}
         />
-        {
-          searchInput.length > 0 && <IoCloseOutline className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer" onClick={handleClear}/>
-        }
-
       </div>
     </div>
   );
