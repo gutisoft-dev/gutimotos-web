@@ -31,15 +31,10 @@ export const ProductsContent = ({ products, isloading }: Props) => {
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
-              <h4 className="text-2xl font-light">Motocicletas</h4>
-              {
-                /**
-                 <span className="text-muted-foreground">
+              <h2 className="text-3xl font-light">Motos</h2>
+              <span className="text-muted-foreground">
                 ({products.length} motos)
-                </span>
-                 */
-              }
-              
+              </span>
             </div>
 
             <div className="flex items-center space-x-2">
@@ -109,8 +104,8 @@ export const ProductsContent = ({ products, isloading }: Props) => {
                 <div
                   className={
                     viewMode === "grid"
-                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5"
-                      : "space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-5"
+                      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6"
+                      : "space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-6"
                   }
                 >
                   {products.map((product) => (

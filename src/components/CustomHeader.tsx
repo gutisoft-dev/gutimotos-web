@@ -34,7 +34,7 @@ export const CustomHeader = () => {
                   path === "" && "underline underline-offset-4"
                 } `}
               >
-                Motocicletas
+                Motos
               </Link>
               <Link
                 to="/spareparts"
@@ -42,7 +42,7 @@ export const CustomHeader = () => {
                   path === "spareparts" && "underline underline-offset-4"
                 }`}
               >
-                Repuestos
+                Repuesto
               </Link>
             </nav>
 
@@ -62,7 +62,7 @@ export const CustomHeader = () => {
                     size="sm"
                     className="ml-2 cursor-pointer"
                   >
-                    Obtener Catálogo
+                    Obtener Catalogo
                   </Button>
                 </Link>
               )}
@@ -77,7 +77,7 @@ export const CustomHeader = () => {
                       size="sm"
                       className="ml-2 cursor-pointer"
                     >
-                      Obtener Catálogo
+                      Obtener Catalogo
                     </Button>
                   </Link>
                 )}
