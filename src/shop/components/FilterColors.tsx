@@ -2,11 +2,9 @@ import { useSearchParams } from "react-router";
 import { useColor } from "../hooks/useColor";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 
 export const FilterColors = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useColor();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useColor();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const colors = searchParams.get("color") || "any";
@@ -62,7 +60,6 @@ export const FilterColors = () => {
         className="w-full cursor-pointer"
         variant="secondary"
       >
-        {isLoading || (isFetchingNextPage && <Spinner className="size-3" />)}
         Ver mas
       </Button>
     </div>
