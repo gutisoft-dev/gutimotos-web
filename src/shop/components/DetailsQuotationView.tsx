@@ -153,7 +153,6 @@ export const DetailsQuotationView = ({
       setLoadingAction(null);
     }
   };
-  // console.log(quotation);
   return (
     <>
       {isLoading ? (
