@@ -33,14 +33,11 @@ export const ProductsContent = ({ products, isloading }: Props) => {
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
               <h4 className="text-2xl font-light">Motocicletas</h4>
-              {
-                /**
+              {/**
                  <span className="text-muted-foreground">
                 ({products.length} motos)
                 </span>
-                 */
-              }
-              
+                 */}
             </div>
 
             <div className="flex items-center space-x-2">
@@ -76,35 +73,43 @@ export const ProductsContent = ({ products, isloading }: Props) => {
           </div>
 
           <div className="flex gap-8">
-            {/* Filters Sidebar - Desktop */}
-            <div className="hidden lg:block">
+            <div className="hidden  lg:block">
               <FilterSidebar type="motorcycle" />
             </div>
 
-            {/* Mobile Filters */}
-            {showFilters && (
+            <div
+              className={`fixed inset-0 z-50 transition-opacity duration-300 lg:hidden
+                ${
+                  showFilters
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 pointer-events-none"
+                }`}
+            >
               <div
-                className="fixed inset-0 z-50 bg-black/60"
-                onClick={() => setShowFilters(false)} 
+                className="absolute inset-0 bg-black/60"
+                onClick={() => setShowFilters(false)}
+              />
+              <div
+                className={`absolute top-0 left-0 h-full w-80 bg-background overflow-y-auto px-4
+            transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]
+            ${showFilters ? "translate-x-0" : "-translate-x-full"}`}
+                onClick={(e) => e.stopPropagation()}
               >
-                <div
-                  className="fixed w-80 overflow-y-auto inset-0 z-50 bg-background pr-4 pl-4 lg:hidden"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="flex items-center justify-between mb-6 sticky top-0 left-0 right-0 bg-background h-15">
-                    <h3 className="text-lg font-semibold">Filtros</h3>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowFilters(false)}
-                    >
+                <div className="sticky top-0 left-0 right-0 z-10 flex items-center justify-between bg-background h-15">
+                  <h3 className="text-lg font-semibold">Filtros</h3>
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowFilters(false)}
+                  >
                     <IoCloseOutline className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <FilterSidebar type="motorcycle" />
+                  </Button>
                 </div>
+
+                <FilterSidebar type="motorcycle" />
               </div>
-            )}
+            </div>
 
             {/* Products Grid */}
             <div className="flex-1">

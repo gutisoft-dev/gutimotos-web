@@ -10,25 +10,15 @@ import {
   ContentSidebarMovilUser,
 } from "@/shop/components/ContentSidebarMovil";
 import { IoBagOutline, IoCloseOutline } from "react-icons/io5";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
 
-} from "@/components/ui/drawer";
-import { useQuotesStore } from "@/shop/store/quotes.store";
-import { CardItem } from "@/shop/components/CardItem";
+import { DrawerQuoter } from "./ui/DrawerQuoter";
 export const CustomHeader = () => {
   const { authStatus } = useAuthStore();
-  const [open, setOpen] = useState(false);
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [showFilters, setShowFilters] = useState(false);
-  const { articles } = useQuotesStore();
+  const [open, setOpen] = useState(false);
+
   const hanleClose = async () => {
     setShowFilters(false);
   };
@@ -58,39 +48,49 @@ export const CustomHeader = () => {
               >
                 Repuestos
               </Link>
+              <Link
+                to="/quotes"
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  path === "quotes" && "underline underline-offset-4"
+                }`}
+              >
+                Cotizaciones
+              </Link>
             </nav>
 
             {/* Search and Cart */}
             <div className="flex items-center  space-x-4">
-               <div className="flex flex-col gap-8">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full cursor-pointer"
-                  onClick={() => setOpen(true)}
-                >
-                  <IoBagOutline />
-                </Button>
-              </div>
+              <div className="flex flex-col gap-8"></div>
+
               {authStatus === "authenticated" ? (
-                <div
-                  className="md:hidden"
-                  onClick={() => setShowFilters(!showFilters)}
-                >
-                  <RiMenu3Fill size={24} />
-                </div>
+                <>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-full cursor-pointer"
+                    onClick={() => setOpen(true)}
+                  >
+                    <IoBagOutline />
+                  </Button>
+                  <div
+                    className="md:hidden"
+                    onClick={() => setShowFilters(!showFilters)}
+                  >
+                    <RiMenu3Fill size={24} />
+                  </div>
+                </>
               ) : (
                 <Link className="md:hidden" to="/auth/login">
                   <Button
                     variant="default"
                     size="sm"
-                    className="ml-2 cursor-pointer"
+                    className="ml-2 cursor-pointer "
                   >
-                    Obtener Catálogo
+                    <span className="text-[10px]">Obtener Catálogo</span>
                   </Button>
                 </Link>
               )}
-             
+
               <div className="hidden md:flex md:justify-center ">
                 {authStatus === "authenticated" ? (
                   <AvatarUser />
@@ -111,55 +111,32 @@ export const CustomHeader = () => {
         </div>
       </header>
 
-      {showFilters && (
-        <div className="fixed overflow-y-auto inset-0 z-50 bg-background p-4 lg:hidden">
+      <div
+        className={`fixed inset-0 z-50 transition-opacity duration-300
+        ${
+          showFilters
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="absolute inset-0 bg-black/60" onClick={hanleClose} />
+        <div
+          className={`absolute top-0 left-0 h-full w-80 bg-background p-4 overflow-y-auto
+      transform transition-transform duration-300 ease-in-out
+      ${showFilters ? "translate-x-0" : "-translate-x-full"}`}
+        >
           <div className="flex items-center justify-between mb-6">
             <ContentSidebarMovilUser />
-            <Button variant="ghost" size="sm" onClick={() => hanleClose()}>
-              Cerrar
+
+            <Button variant="ghost" size="icon" onClick={hanleClose}>
+              <IoCloseOutline size={20} />
             </Button>
           </div>
-          {/* <FilterSidebar /> */}
+
           <ContentSidebarMovil onClose={hanleClose} />
         </div>
-      )}
-
-      <Drawer direction="right" open={open} onOpenChange={setOpen}>
-        <DrawerContent>
-          <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader>
-              <div className="flex  justify-between ">
-                <div>
-                  <DrawerTitle>Lista</DrawerTitle>
-                  <DrawerDescription>
-                    agrega los articulos que quieras cotizar
-                  </DrawerDescription>
-                </div>
-                <div>
-                  <DrawerClose asChild>
-                    <IoCloseOutline size={20} className="cursor-pointer" />
-                  </DrawerClose>
-                </div>
-              </div>
-            </DrawerHeader>
-            <div className="p-4 pb-0 h-[calc(100vh-150px)] flex flex-col items-center overflow-y-scroll">
-              {articles.length === 0 && (
-                <em className="text-muted-foreground text-[0.70rem] ">
-                  lista vacia
-                </em>
-              )}
-
-              {articles.length > 0 &&
-                articles.map((item, index) => (
-                  <CardItem key={index} {...item} />
-                ))}
-            </div>
-            <DrawerFooter>
-              <Button>Cotizar lista</Button>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
+      </div>
+      <DrawerQuoter open={open} setOpen={setOpen} />
     </>
   );
 };

@@ -5,6 +5,8 @@ import { SparepartsPage } from "../shop/pages/SparepartsPage";
 import { lazy } from "react";
 import { LoginPages } from "../auth/pages/LoginPages";
 import { AuthenticatedRoute, NotAuthenticatedRoute } from "./ProtectedRoutes";
+import { QuotesPages } from "@/shop/pages/QuotesPages";
+import { DetailsQuotesPages } from "@/shop/pages/DetailsQuotesPages";
 
 const AuthLayout = lazy(() => import("../auth/layouts/AuthLayout"));
 
@@ -30,6 +32,24 @@ export const appRouter = createBrowserRouter([
       {
         index: true,
         element: <SparepartsPage />,
+      },
+    ],
+  },
+  {
+    path: "/quotes",
+    element: (
+      <AuthenticatedRoute>
+        <ShopLayout />
+      </AuthenticatedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <QuotesPages />,
+      },
+      {
+        path: "details",
+        element: <DetailsQuotesPages />,
       },
     ],
   },

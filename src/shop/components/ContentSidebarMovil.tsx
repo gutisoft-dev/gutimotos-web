@@ -37,6 +37,15 @@ export const ContentSidebarMovil = ({ onClose }: Props) => {
           Repuestos
         </Link>
         <Separator />
+         <Link
+          to="/quotes"
+          className={`text-sm font-medium transition-colors hover:text-primary ${
+            path === "quotes" && "underline underline-offset-4"
+          }`}
+        >
+          Cotizaciones
+        </Link>
+        <Separator />
       </div>
       <div onClick={HandleClose} className="flex items-center justify-between space-x-2 mt-6 cursor-pointer">
         <h4 className="text-sm font-medium transition-colors"> Cerrar Session</h4> <IoExitOutline />
