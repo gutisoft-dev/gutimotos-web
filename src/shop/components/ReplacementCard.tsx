@@ -101,7 +101,6 @@ export const ReplacementCard = ({
             </p>
           </div>
 
-          {/* Botón siempre abajo */}
           <div className="flex items-center justify-between mt-4">
             <Button
               size="sm"

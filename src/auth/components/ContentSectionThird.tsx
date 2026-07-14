@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { CustomLogo } from "./CustomLogo";
 import {
   InputOTP,
@@ -9,6 +8,7 @@ import { useState } from "react";
 import { useAuthStore } from "../store/auth.store";
 import { toast } from "react-toastify";
 import { ContentTimer } from "./ContentTimer";
+import { Spinner } from "@/components/ui/spinner";
 
 interface Props {
   email: string;
@@ -19,21 +19,26 @@ export const ContentSectionThird = ({ email }: Props) => {
   const [isposting, setIsposting] = useState(false);
   const { loginOtp } = useAuthStore();
 
-  const handleLoginOtp = async () => {
-    setIsposting(true);
-    const resp = await loginOtp(email, otp);
-    if (!resp) {
+  const handleOtpChange = async (value: string) => {
+    setOtp(value);
+
+    if (value.length === 6 && !isposting) {
+      setIsposting(true);
+
+      const resp = await loginOtp(email, value);
+
+      if (!resp) {
+        toast.error("Error al iniciar sesión", {
+          position: "top-right",
+        });
+      }
+
       setIsposting(false);
-      return toast.error("error al iniciar session", {
-        position: "top-right",
-      });
     }
-    setIsposting(false);
   };
 
   return (
     <div>
-      
       <div className="flex flex-col items-center text-center">
         <CustomLogo />
       </div>
@@ -44,9 +49,9 @@ export const ContentSectionThird = ({ email }: Props) => {
         >
           Ingresa el código de acceso que le enviamos a su correo electrónico.
         </label>
-        <ContentTimer/>
+        <ContentTimer />
 
-        <InputOTP maxLength={6} value={otp} onChange={(value) => setOtp(value)}>
+        <InputOTP maxLength={6} value={otp} onChange={handleOtpChange}>
           <InputOTPGroup>
             <InputOTPSlot index={0} />
           </InputOTPGroup>
@@ -66,13 +71,7 @@ export const ContentSectionThird = ({ email }: Props) => {
             <InputOTPSlot index={5} />
           </InputOTPGroup>
         </InputOTP>
-        <Button
-          className="w-full cursor-pointer"
-          disabled={isposting || otp.length < 6}
-          onClick={handleLoginOtp}
-        >
-          Ingresar
-        </Button>
+        {isposting && <Spinner />}
       </div>
     </div>
   );

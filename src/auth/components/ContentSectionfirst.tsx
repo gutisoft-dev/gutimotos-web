@@ -2,16 +2,18 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CustomLogo } from "./CustomLogo";
 import { FaFacebookF, FaGoogle, FaInstagram, FaTiktok } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useAuthStore } from "../store/auth.store";
 import { Spinner } from "@/components/ui/spinner";
+import { ContentEmail } from "./ContentEmail";
+import { Separator } from "@/components/ui/separator";
 
 interface Props {
   handleSection: (section: number) => void;
+    handleEmail: (email: string) => void;
 }
 
-export const ContentSectionfirst = ({ handleSection }: Props) => {
+export const ContentSectionfirst = ({ handleSection, handleEmail }: Props) => {
   const [isposting, setIsposting] = useState(false);
   const { login } = useAuthStore();
   const handlelogin = async () => {
@@ -48,14 +50,13 @@ export const ContentSectionfirst = ({ handleSection }: Props) => {
         </h2>
       </div>
 
-        <div className="space-y-4 sm:space-y-5">
-          <Button
-            onClick={handlelogin}
-            disabled={isposting}
-            className="
+      <div className="space-y-4 sm:space-y-5">
+        <Button
+          onClick={handlelogin}
+          disabled={isposting}
+          className="
               w-full
-              h-12
-              rounded-xl
+              h-10
               font-medium
               text-sm
               sm:text-base
@@ -70,47 +71,15 @@ export const ContentSectionfirst = ({ handleSection }: Props) => {
               gap-3
               shadow-sm
             "
-          >
-            <FaGoogle className="text-lg" />
+        >
+          <FaGoogle className="text-lg" />
 
-            <span>
-              {isposting
-                ? "Conectando..."
-                : "Continuar con Google"}
-            </span>
-          </Button>
-
-          <Button
-            variant="outline"
-            onClick={() => handleSection(2)}
-            className="
-              w-full
-              h-12
-              rounded-xl
-              font-medium
-              text-sm
-              sm:text-base
-              cursor-pointer
-              transition-all
-              duration-200
-              hover:border-red-500
-              hover:text-red-600
-              active:scale-[0.99]
-              flex
-              items-center
-              justify-center
-              gap-3
-            "
-          >
-            <MdEmail className="text-lg" />
-
-            <span>
-              Continuar con correo
-            </span>
-          </Button>
+          <span>{isposting ? "Conectando..." : "Continuar con Google"}</span>
+        </Button>
+        <Separator  />
+        <ContentEmail  handleSection={handleSection} handleEmail={handleEmail}/>
       </div>
 
-        
       <div>
         <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
           <span className="relative z-10 bg-background px-2 text-muted-foreground">
