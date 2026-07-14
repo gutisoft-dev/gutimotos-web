@@ -19,13 +19,19 @@ import { useQuotesStore } from "@/shop/store/quotes.store";
 import { createQuotation } from "@/shop/actions/quotation.actions";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 export type FormData = {
   whatsapp: string;
   type_price_slug: string;
   currency_code: string;
+  
 };
 
-export const DialogQuotes = () => {
+interface Props {
+   hanleClose: () => Promise<void>
+}
+
+export const DialogQuotes = ({ hanleClose }: Props) => {
   const {
     register,
     handleSubmit,
@@ -35,6 +41,7 @@ export const DialogQuotes = () => {
   } = useForm<FormData>();
   const { articles, clearArticles } = useQuotesStore();
 const queryClient = useQueryClient();
+const [open, setOpen] = useState(false);
 
   const onSubmit = async (data: FormData) => {
     const quotation = {
@@ -53,6 +60,8 @@ const queryClient = useQueryClient();
 
     reset();
     clearArticles();
+    setOpen(false);
+    hanleClose();
     toast.success(resp.message);
     queryClient.invalidateQueries({
       queryKey: ["quotations"],
@@ -60,7 +69,7 @@ const queryClient = useQueryClient();
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
           <Button

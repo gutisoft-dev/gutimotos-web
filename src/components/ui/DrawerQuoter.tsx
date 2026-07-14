@@ -22,7 +22,9 @@ interface Props {
 
 export const DrawerQuoter = ({ open, setOpen }: Props) => {
   const { articles } = useQuotesStore();
-
+    const hanleClose = async () => {
+    setOpen(false);
+  };
   return (
     <>
       <Drawer direction="right" open={open} onOpenChange={setOpen}>
@@ -56,7 +58,7 @@ export const DrawerQuoter = ({ open, setOpen }: Props) => {
             </div>
 
             <DrawerFooter className="border-t bg-background">
-              <DialogQuotes/>
+              <DialogQuotes hanleClose={hanleClose} />
             </DrawerFooter>
           </div>
         </DrawerContent>

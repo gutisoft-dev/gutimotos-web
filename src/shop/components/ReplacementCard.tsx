@@ -5,6 +5,8 @@ import { useNavigate, useSearchParams } from "react-router";
 import { useProductStore } from "../store/product.store";
 import clsx from "clsx";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 interface Props {
   id: number;
@@ -36,6 +38,8 @@ export const ReplacementCard = ({
   const { authStatus } = useAuthStore();
   const [searchParams] = useSearchParams();
   const { setProduct, setIdSlug } = useProductStore();
+    const [imageLoaded, setImageLoaded] = useState(false);
+  
   const viewMode = searchParams.get("viewMode") || "grid";
 
   const currency = searchParams.get("currency_code") || "BOB";
@@ -47,7 +51,7 @@ export const ReplacementCard = ({
     setIdSlug(id.toString());
     setProduct(id.toString());
     setProduct_description(product_description);
-    setdetail(`${brand_name || ""} ${brand_name ? "-":""} ${measure_name}`)
+    setdetail(`${brand_name || ""} ${brand_name ? "-" : ""} ${measure_name}`);
     setOpenDialog(true);
   };
 
@@ -61,23 +65,26 @@ export const ReplacementCard = ({
         <div
           className={clsx(
             "relative overflow-hidden bg-muted  rounded-md  border m-2",
-            viewMode === "list" ? "w-50 h-50" : "aspect-square"
+            viewMode === "list" ? "w-50 h-50" : "aspect-square",
           )}
         >
+          {!imageLoaded && (
+           <div className="absolute inset-0 flex items-center justify-center bg-muted">
+              <Spinner className="h-6 w-6 animate-spin text-primary" />
+            </div>
+          )}
+
           <LazyLoadImage
             src={photo}
+            afterLoad={() => setImageLoaded(true)}
+            onError={() => setImageLoaded(true)}
             className={clsx(
               viewMode === "list" ? "w-50 h-50" : "w-full h-full",
-              "object-cover transition-transform duration-300 group-hover:scale-105"
+              "object-cover transition-all duration-300 group-hover:scale-105",
+              imageLoaded ? "opacity-100" : "opacity-0",
             )}
           />
 
-          {/* <ContentImg
-            source={photo}
-            height={`${
-              viewMode === "list" ? "w-50 h-50" : "w-full h-full"
-            } object-cover transition-transform duration-300 group-hover:scale-105`}
-          /> */}
           <div className="image-overlay" />
         </div>
 
@@ -88,7 +95,7 @@ export const ReplacementCard = ({
             <h3 className="font-medium text-sm tracking-tight line-clamp-2">
               {product_description}
             </h3>
-             <p className="text-xs text-muted-foreground uppercase">
+            <p className="text-xs text-muted-foreground uppercase">
               {brand_name} {brand_name && "-"} {measure_name}
             </p>
             <p className="text-xs text-muted-foreground uppercase">

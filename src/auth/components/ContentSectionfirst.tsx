@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CustomLogo } from "./CustomLogo";
-import { FaFacebookF, FaGoogle, FaInstagram, FaTiktok } from "react-icons/fa";
+import {  FaGoogle,  } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useAuthStore } from "../store/auth.store";
 import { Spinner } from "@/components/ui/spinner";
@@ -30,9 +30,9 @@ export const ContentSectionfirst = ({ handleSection, handleEmail }: Props) => {
     setIsposting(false);
   };
 
-  const redirectToExternal = (url: string) => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
+  // const redirectToExternal = (url: string) => {
+  //   window.open(url, "_blank", "noopener,noreferrer");
+  // };
   return (
     <>
       {isposting && (
@@ -42,15 +42,15 @@ export const ContentSectionfirst = ({ handleSection, handleEmail }: Props) => {
           </div>
         </div>
       )}
-      <div className="flex flex-col items-center text-center">
+      <div className="flex flex-col items-center text-center mb-3">
         <CustomLogo />
 
         <h2 className="text-sm text-muted-foreground mt-3">
           Explora catálogo de motos, repuestos y accesorios.
         </h2>
       </div>
-
-      <div className="space-y-4 sm:space-y-5">
+      <div className="">
+         <div className="space-y-4 sm:space-y-5 ">
         <Button
           onClick={handlelogin}
           disabled={isposting}
@@ -79,8 +79,10 @@ export const ContentSectionfirst = ({ handleSection, handleEmail }: Props) => {
         <Separator  />
         <ContentEmail  handleSection={handleSection} handleEmail={handleEmail}/>
       </div>
+      </div>
+     
 
-      <div>
+      {/* <div>
         <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
           <span className="relative z-10 bg-background px-2 text-muted-foreground">
             Nuestras redes sociales
@@ -122,7 +124,7 @@ export const ContentSectionfirst = ({ handleSection, handleEmail }: Props) => {
             <span className="sr-only">Login with tiktok</span>
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

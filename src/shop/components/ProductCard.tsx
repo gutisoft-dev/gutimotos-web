@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate, useSearchParams } from "react-router";
 import { useProductStore } from "../store/product.store";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 interface Props {
   id: number;
   motorcycle_file: number;
@@ -27,32 +29,42 @@ export const ProductCard = ({
   const [searchParams] = useSearchParams();
   const { setProduct } = useProductStore();
   const viewMode = searchParams.get("viewMode") || "grid";
-
+  const [imageLoaded, setImageLoaded] = useState(false);
   const handleOpenDialog = () => {
     if (authStatus === "not-authenticated") {
       return navigate("/auth/login");
     }
     // console.log(id)
-    
+
     setProduct(id.toString());
     setOpenDialog(true);
   };
 
   return (
     <Card className="group rounded-md border shadow-none product-card-hover cursor-pointer h-full">
-      <CardContent className={`p-0 h-full ${viewMode === "list" && "flex flex-row"} `}>
+      <CardContent
+        className={`p-0 h-full ${viewMode === "list" && "flex flex-row"} `}
+      >
         <div className="relative aspect-square overflow-hidden bg-muted rounded-md  border m-2">
-          <LazyLoadImage
-            src={photo} 
-            className={`${viewMode === "list" ? "w-50 h-50" : "w-full h-full"} object-cover transition-transform duration-300 group-hover:scale-105`}
-          />
+          {!imageLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-muted">
+              <Spinner className="h-6 w-6 animate-spin text-primary" />
+            </div>
+          )}
 
-          {/* <ContentImg
-            source={photo}
-            height={`${
-              viewMode === "list" ? "w-50 h-50" : "w-full h-full"
-            } object-cover transition-transform duration-300 group-hover:scale-105`}
-          /> */}
+          <LazyLoadImage
+            src={photo}
+            alt={motorcycle_type}
+            afterLoad={() => setImageLoaded(true)}
+            onError={() => setImageLoaded(true)}
+            className={`
+              ${viewMode === "list" ? "w-50 h-50" : "w-full h-full"}
+              object-cover
+              transition-all duration-300
+              group-hover:scale-105
+              ${imageLoaded ? "opacity-100" : "opacity-0"}
+            `}
+          />
           <div className="image-overlay " />
         </div>
 
