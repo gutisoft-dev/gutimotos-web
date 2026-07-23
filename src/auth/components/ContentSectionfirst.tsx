@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { useAuthStore } from "../store/auth.store";
 import { Spinner } from "@/components/ui/spinner";
 import { ContentEmail } from "./ContentEmail";
-import { Separator } from "@/components/ui/separator";
 
 interface Props {
   handleSection: (section: number) => void;
@@ -58,8 +57,6 @@ export const ContentSectionfirst = ({ handleSection, handleEmail }: Props) => {
               w-full
               h-10
               font-medium
-              text-sm
-              sm:text-base
               cursor-pointer
               transition-all
               duration-200
@@ -69,14 +66,13 @@ export const ContentSectionfirst = ({ handleSection, handleEmail }: Props) => {
               items-center
               justify-center
               gap-3
-              shadow-sm
-            "
+              shadow-sm"
         >
           <FaGoogle className="text-lg" />
 
           <span>{isposting ? "Conectando..." : "Continuar con Google"}</span>
         </Button>
-        <Separator  />
+        {/* <Separator  /> */}
         <ContentEmail  handleSection={handleSection} handleEmail={handleEmail}/>
       </div>
       </div>

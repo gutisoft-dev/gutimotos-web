@@ -28,7 +28,7 @@ export const ProductsContent = ({ products, isloading }: Props) => {
 
   return (
     <>
-      <section className="py-12 px-4 lg:px-8">
+      <section className="py-4 px-4 lg:px-8">
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center space-x-4">
@@ -91,8 +91,8 @@ export const ProductsContent = ({ products, isloading }: Props) => {
               />
               <div
                 className={`absolute top-0 left-0 h-full w-80 bg-background overflow-y-auto px-4
-            transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]
-            ${showFilters ? "translate-x-0" : "-translate-x-full"}`}
+                transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]
+                ${showFilters ? "translate-x-0" : "-translate-x-full"}`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="sticky top-0 left-0 right-0 z-10 flex items-center justify-between bg-background h-15">

@@ -3,13 +3,16 @@ import { RouterProvider } from "react-router";
 import { appRouter } from "./router/app.router";
 import { ToastContainer } from "react-toastify";
 import { CheckAuthProvider } from "./auth/providers/CheckAuthProvider";
+import { TooltipProvider } from "./components/ui/tooltip";
 const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ToastContainer />
       <CheckAuthProvider>
-        <RouterProvider router={appRouter} />
+        <TooltipProvider>
+          <RouterProvider router={appRouter} />
+        </TooltipProvider>
       </CheckAuthProvider>
     </QueryClientProvider>
   );

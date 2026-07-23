@@ -18,12 +18,14 @@ interface Props {
 
 export const SelectTypePrice = ({ control }: Props) => {
   const { data } = useTypePrice("sparepart");
+ 
   return (
     <Field>
       <Label htmlFor="name-1">Tipo de precio</Label>
       <Controller
         name="type_price_slug"
         control={control}
+        defaultValue="precio-por-mayor"
         rules={{ required: true }}
         render={({ field,fieldState }) => (
           <Select value={field.value} onValueChange={field.onChange}>

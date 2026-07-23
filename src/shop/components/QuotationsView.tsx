@@ -49,7 +49,7 @@ export const QuotationsView = ({ quotations }: QuotationsViewProps) => {
                             : quotation.status === "EXPIRED" ||
                                 quotation.status === "CANCELLED"
                               ? "bg-red-100 text-red-700"
-                              : quotation.status === "REVISED" &&
+                              : quotation.status === "REVIEWED" &&
                                 "bg-yellow-100 text-yellow-700"
                       }`}
                     >
@@ -69,9 +69,9 @@ export const QuotationsView = ({ quotations }: QuotationsViewProps) => {
                       Cotización
                     </p>
 
-                    <h3 className="font-semibold text-base tracking-tight">
+                    {/* <h3 className="font-semibold text-base tracking-tight">
                       #{quotation.id.substring(0, 8)}
-                    </h3>
+                    </h3> */}
                   </div>
 
                   <div>
@@ -91,14 +91,19 @@ export const QuotationsView = ({ quotations }: QuotationsViewProps) => {
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Calendar className="w-4 h-4" />
 
-                    <span>{formatDate(quotation.created)}</span>
+                    <span className="font-semibold">Fecha de creación:</span>  <span>{formatDate(quotation.created)}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Calendar className="w-4 h-4" />
+
+                   <span className="font-semibold">Fecha de expiración:</span> <span>{formatDate(quotation.expired)}</span>
                   </div>
                 </div>
 
                 {/* Footer */}
                 <div className="p-4 border-t text-center">
                   <Button
-                    className="w-full cursor-pointer"
+                    className="w-full cursor-pointer hover:bg-primary hover:text-primary-foreground"
                     size="sm"
                     variant={
                       quotation.status === "CREATED" ? "outline" : "secondary"
@@ -111,14 +116,14 @@ export const QuotationsView = ({ quotations }: QuotationsViewProps) => {
                       navigate(`/quotes/details?id=${quotation.id}`);
                     }}
                   >
-                    {quotation ? "Ver detalles" : "Cotización deshabilitada"}
+                    {quotation.status === "CREATED" ? "Editar Cotización" : quotation.status === "CONFIRMED" || quotation.status === "REVIEWED" || quotation.status === "CANCELLED" ?  "Ver Cotización" : "Ver Cotización"}
                   </Button>
                   {quotation.status === "CREATED" && (
                     <em className="text-xs text-muted-foreground ">
                       Esta cotización esta en proceso de revisión
                     </em>
                   )}
-                  {quotation.status === "REVISED" && (
+                  {quotation.status === "REVIEWED" && (
                     <em className="text-xs text-muted-foreground">
                       Hay acciones que debes realizar en la cotización Click para entrar
                     </em>
