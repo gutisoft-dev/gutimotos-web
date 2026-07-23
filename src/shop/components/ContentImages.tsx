@@ -80,7 +80,7 @@ export const ContentImagesDesktop = ({ photo }: Props) => {
       </div>
       {photo.length > 3 && (
         <div>
-          <ScrollArea className="w-[290px] md:w-[500px] lg:w-[700px] rounded-md  ">
+          <ScrollArea className="w-72.5 md:w-125 lg:w-175 rounded-md  ">
             <div className="flex w-max space-x-2 py-4">
               {photo.slice(3, photo.length).map((img,index) => (
                 <figure key={img.id} className="shrink-0">

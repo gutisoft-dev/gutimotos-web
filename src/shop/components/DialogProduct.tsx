@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +8,6 @@ import {
 
 import { DetailContent } from "./DetailContent";
 import { useDetail } from "../hooks/useDetail";
-import { useAuthStore } from "@/auth/store/auth.store";
 import { ConentSkeleton } from "./ConentSkeleton";
 import { useQuotesStore, type Article } from "../store/quotes.store";
 import { toast } from "react-toastify";
@@ -25,20 +23,19 @@ export const DialogProduct = ({ open, setOpen }: Props) => {
 
   const { data, isLoading } = useDetail();
   const { addArticle } = useQuotesStore();
-  const { user } = useAuthStore();
-  const handleRedirectTowhatsapp = () => {
-    const phoneNumber = "59167398260";
-    const message = `
-    Soy usuario con el email:${user?.email}.
-    Quiero una cotización de la motocicleta:
-    Marca:${data?.data.brand_name}
-    Tipo:${data?.data.motorcycle_type_name}
-    Color:${data?.data.color_name}`;
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message,
-    )}`;
-    window.open(url, "_blank");
-  };
+  // const handleRedirectTowhatsapp = () => {
+  //   const phoneNumber = "59167398260";
+  //   const message = `
+  //   Soy usuario con el email:${user?.email}.
+  //   Quiero una cotización de la motocicleta:
+  //   Marca:${data?.data.brand_name}
+  //   Tipo:${data?.data.motorcycle_type_name}
+  //   Color:${data?.data.color_name}`;
+  //   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+  //     message,
+  //   )}`;
+  //   window.open(url, "_blank");
+  // };
   const handleAddToQuotes = () => {
     if (!data?.data) return;
     const newArticle: Article = {
@@ -81,19 +78,19 @@ export const DialogProduct = ({ open, setOpen }: Props) => {
             >
               Cerrar
             </Button> */}
-              <Button
+              {/* <Button
                 variant="outline"
                 className="cursor-pointer"
                 onClick={() => setOpenDialog(true)}
               >
                 Agregar a lista de cotizaciones
-              </Button>
-              <Button
+              </Button> */}
+              {/* <Button
                 className="cursor-pointer"
                 onClick={() => handleRedirectTowhatsapp()}
               >
                 Cotizar motocicleta
-              </Button>
+              </Button> */}
             </div>
           )}
         </DialogContent>

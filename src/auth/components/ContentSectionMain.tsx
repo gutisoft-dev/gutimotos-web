@@ -11,7 +11,7 @@ export const ContentSectionMain = () => {
   const handleEmail = (email: string) => setEmail(email);
   return (
     <>
-      <div className="flex flex-col  min-h-87.5  justify-around">
+      <div className="flex flex-col  min-h-87.5 justify-center">
 
         
         {section === 1 && <ContentSectionfirst handleSection={handleSection} handleEmail={handleEmail} />}

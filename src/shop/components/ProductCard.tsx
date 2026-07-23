@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import { useProductStore } from "../store/product.store";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useState } from "react";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 interface Props {
   id: number;
   motorcycle_file: number;
@@ -47,8 +47,8 @@ export const ProductCard = ({
       >
         <div className="relative aspect-square overflow-hidden bg-muted rounded-md  border m-2">
           {!imageLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-muted">
-              <Spinner className="h-6 w-6 animate-spin text-primary" />
+            <div className="absolute inset-0">
+              <Skeleton className="relative h-full w-full overflow-hidden rounded-md bg-muted before:absolute before:inset-0 before:w-1/2 before:-translate-x-full before:animate-[shimmer_1.5s_linear_infinite] before:bg-linear-to-r before:from-transparent before:via-white/40 dark:before:via-white/15 before:to-transparent before:content-['']" />
             </div>
           )}
 
@@ -88,6 +88,7 @@ export const ProductCard = ({
             >
               Ver precio y fotos
             </Button>
+            
           </div>
         </div>
       </CardContent>

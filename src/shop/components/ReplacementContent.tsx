@@ -31,9 +31,9 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
 
   return (
     <>
-      <section className="py-12 px-4 lg:px-8">
+      <section className="py-4 px-4 lg:px-8">
         <div className="container mx-auto">
-          <div className="sticky top-[64px] z-10 bg-white p-[10px]">
+          <div className="sticky top-16 z-10 bg-white p-2.5">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center space-x-4">
                 <h4 className="text-2xl font-light">Repuestos</h4>
@@ -73,7 +73,6 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
                 </div>
               </div>
             </div>
-            {/* Oculta Search Button para dispositivos con pantalla lg */}
             <div className="mb-2 lg:hidden">
               <SearchButton />
             </div>
@@ -111,7 +110,8 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
             )}
 
             {/* Products Grid */}
-            <div className="flex-1">
+            <div className=" relative flex-1">
+              <div className="absolute top-0 left-0 right-0 h-4 -translate-y-full bg-gradient-to-b from-black/10 to-transparent pointer-events-none" />
               {isloading ? (
                 <ContentLoading />
               ) : replacements.length === 0 ? (
@@ -152,6 +152,7 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
           product_description={product_description}
           detail={detail}
         />
+        
       </section>
     </>
   );

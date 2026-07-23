@@ -11,7 +11,7 @@ import {
 import { ContentReplacementModal } from "./ContentReplacementModal";
 import { SearchButton } from "./ReplacementContent";
 import type { Item } from "../interfaces/Quotation.response";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import { IoAddOutline } from "react-icons/io5";
 interface Prop {
   addItem: (newItem: Item) => void;
   status:boolean
@@ -21,8 +21,16 @@ export const ModalAddItems = ({ addItem,status }: Prop) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" disabled={status}>
-          <IoMdAddCircleOutline /> Agregar Items
+        <Button variant="outline" disabled={status}  className="
+            h-13 w-13
+            rounded-full
+            shadow-xl
+            hover:scale-105
+            transition-all
+            duration-200
+            cursor-pointer
+          ">
+          <IoAddOutline /> 
         </Button>
       </DialogTrigger>
       <DialogContent className="lg:max-w-4xl">

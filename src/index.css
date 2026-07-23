@@ -119,9 +119,15 @@
   }
 }
 @theme {
-  --font-montserrat: 'Montserrat Alternates', sans-serif;
+  --font-montserrat: "Montserrat Alternates", sans-serif;
 }
 
-  .medium-zoom-overlay .medium-zoom-close {
-    display: none !important;
+.medium-zoom-overlay .medium-zoom-close {
+  display: none !important;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
   }
+}

@@ -11,10 +11,7 @@ import { useAuthStore } from "@/auth/store/auth.store";
 import { ConentSkeleton } from "./ConentSkeleton";
 import { useDetailReplacement } from "../hooks/useDetailReplacement";
 import { DetailReplacement } from "./DetailReplacement";
-import { useQuotesStore, type Article } from "../store/quotes.store";
-import { toast } from "react-toastify";
-import { DialogConfirm } from "./DialogConfirm";
-import { useState } from "react";
+
 interface Props {
   product_description: string;
   detail: string;
@@ -26,12 +23,9 @@ export const DialogReplace = ({
   open,
   setOpen,
   product_description,
-  detail,
 }: Props) => {
-  const [openDialog, setOpenDialog] = useState(false);
 
   const { data, isLoading } = useDetailReplacement();
-  const { addArticle } = useQuotesStore();
   const { user } = useAuthStore();
   const handleRedirectTowhatsapp = () => {
     const phoneNumber = "59167398260";
@@ -46,22 +40,7 @@ export const DialogReplace = ({
     window.open(url, "_blank");
   };
 
-  const handleAddToQuotes = () => {
-    if (!data?.data) return;
-    const newArticle: Article = {
-      motorcycle_type: product_description,
-      photo: data.data.photos[0].photo || "",
-      brand: detail,
-      amount: 1,
-      code: data.data.product_code.toString(),
-    };
-    addArticle(newArticle);
-    toast.success("Item agregado a la cotizacion", {
-      position: "top-right",
-      autoClose: 2000,
-    });
-    setOpenDialog(false);
-  };
+
 
   return (
     <div>
@@ -85,7 +64,7 @@ export const DialogReplace = ({
             )
           )}
           {!isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-5">
+            <div className="grid grid-cols-1  gap-2 mt-5">
               {/* <Button
               className="w-full cursor-pointer"
               variant="outline"
@@ -93,15 +72,15 @@ export const DialogReplace = ({
             >
               Cerrar
             </Button> */}
-              <Button
+              {/* <Button
                 variant="outline"
                 className="cursor-pointer"
                 onClick={() => setOpenDialog(true)}
               >
                 Agregar a lista de cotizaciones
-              </Button>
+              </Button> */}
               <Button
-                className="cursor-pointer"
+                className="cursor-pointer w-full"
                 onClick={() => handleRedirectTowhatsapp()}
               >
                 Cotizar repuesto
@@ -110,7 +89,6 @@ export const DialogReplace = ({
           )}
         </DialogContent>
       </Dialog>
-      <DialogConfirm open={openDialog} setOpen={setOpenDialog} handleaction={() => handleAddToQuotes()} />
     </div>
   );
 };

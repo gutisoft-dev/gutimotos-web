@@ -122,8 +122,8 @@ export const CustomHeader = () => {
         <div className="absolute inset-0 bg-black/60" onClick={hanleClose} />
         <div
           className={`absolute top-0 left-0 h-full w-80 bg-background p-4 overflow-y-auto
-      transform transition-transform duration-300 ease-in-out
-      ${showFilters ? "translate-x-0" : "-translate-x-full"}`}
+            transform transition-transform duration-300 ease-in-out
+            ${showFilters ? "translate-x-0" : "-translate-x-full"}`}
         >
           <div className="flex items-center justify-between mb-6">
             <ContentSidebarMovilUser />
