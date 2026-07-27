@@ -25,6 +25,7 @@ export type FormData = {
   whatsapp: string;
   type_price_slug: string;
   currency_code: string;
+  
 };
 
 interface Props {
