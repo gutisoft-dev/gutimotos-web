@@ -76,7 +76,7 @@ export const DialogQuotes = ({ hanleClose }: Props) => {
             className="w-full cursor-pointer"
             disabled={articles.length === 0}
           >
-            Cotizar lista
+            Enviar a cotizar
           </Button>
         </DialogTrigger>
         <DialogContent className="lg:max-w-106.25">
