@@ -12,8 +12,10 @@ import {
 import { IoBagOutline, IoCloseOutline } from "react-icons/io5";
 
 import { DrawerQuoter } from "./ui/DrawerQuoter";
+import { useQuotesStore } from "@/shop/store/quotes.store";
 export const CustomHeader = () => {
   const { authStatus } = useAuthStore();
+    const { articles } = useQuotesStore();
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [showFilters, setShowFilters] = useState(false);
@@ -64,14 +66,22 @@ export const CustomHeader = () => {
 
               {authStatus === "authenticated" ? (
                 <>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="rounded-full cursor-pointer"
-                    onClick={() => setOpen(true)}
-                  >
-                    <IoBagOutline />
-                  </Button>
+                  <div className="relative inline-block">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="rounded-full cursor-pointer"
+                      onClick={() => setOpen(true)}
+                    >
+                      <IoBagOutline className="h-5 w-5" />
+                    </Button>
+
+                    {articles.length > 0 && (  
+                    <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                      {articles.length}
+                    </span>
+                    )}
+                  </div>
                   <div
                     className="md:hidden"
                     onClick={() => setShowFilters(!showFilters)}

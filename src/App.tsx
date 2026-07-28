@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer />
+      <ToastContainer  autoClose={700} />
       <CheckAuthProvider>
         <TooltipProvider>
           <RouterProvider router={appRouter} />

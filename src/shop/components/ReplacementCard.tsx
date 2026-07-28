@@ -78,7 +78,7 @@ export const ReplacementCard = ({
     addArticle(newArticle);
     toast.success("Item agregado a la cotizacion", {
       position: "top-right",
-      autoClose: 2000,
+      autoClose: 500,
     });
     setOpenModal(false);
   };
@@ -137,7 +137,7 @@ export const ReplacementCard = ({
               </p>
             </div>
 
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex flex-col md:flex-row gap-3   items-center justify-between mt-4">
               <Button
                 size="sm"
                 variant="outline"
@@ -153,7 +153,7 @@ export const ReplacementCard = ({
                     variant="outline"
                     size="icon"
                     aria-label="Submit"
-                    className="cursor-pointer"
+                    className="cursor-pointer w-full md:w-9 "
                     onClick={() => setOpenModal(true)}
                   >
                     <MdAddShoppingCart />

@@ -16,7 +16,11 @@ import {
 } from "../actions/quotation.actions";
 import { Spinner } from "@/components/ui/spinner";
 import { CardRevied } from "./CardRevied";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 export const DetailsQuotationView = ({
   quotationId,
 }: {
@@ -177,7 +181,15 @@ export const DetailsQuotationView = ({
       ) : (
         quotation && (
           <div className=" px-2 sm:px-2 py-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 pb-6 border-b border-slate-200">
+            <div
+              className="sticky top-16 z-20
+              grid grid-cols-2 sm:grid-cols-4 gap-4
+              mb-6 pb-6
+              border-b border-slate-200
+              bg-white
+              py-4
+              "
+            >
               <div>
                 <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
                   Estado
