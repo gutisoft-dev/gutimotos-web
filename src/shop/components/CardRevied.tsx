@@ -72,14 +72,14 @@ export const CardRevied = ({
 
         {/* Cantidad y Total */}
         <div className="grid grid-cols-2 border-t md:border-t-0 md:flex md:items-center">
-          <div className="px-6 py-3 text-center">
+          <div className="px-3 py-3 text-center">
             <p className="text-sm text-slate-500">Cantidad</p>
-            <span className="text-base font-semibold">{amount}</span>
+            <span className="text-sm font-semibold">{amount}</span>
           </div>
 
-          <div className="border-l px-6 py-3 text-center md:border-l-0">
+          <div className="border-l px-3 py-3 text-center md:border-l-0">
             <p className="text-sm text-slate-500">Total</p>
-            <span className="text-base font-semibold">
+            <span className="text-sm font-semibold">
               {currency_code} {price}
             </span>
           </div>

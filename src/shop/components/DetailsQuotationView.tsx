@@ -31,9 +31,7 @@ export const DetailsQuotationView = ({
     isLoading,
     refetch,
   } = useDetailsQuotation(quotationId);
-  console.log(quotation);
   const [itemsQuotations, setItemsQuotations] = useState<Item[]>([]);
-  console.log(itemsQuotations);
   const [isLoadingFetch, setIsLoadingFetch] = useState(false);
   const [loadingAction, setLoadingAction] = useState<
     "CONFIRMED" | "CANCELLED" | null
@@ -181,75 +179,114 @@ export const DetailsQuotationView = ({
       ) : (
         quotation && (
           <div className=" px-2 sm:px-2 py-4">
-            <div
-              className="sticky top-16 z-20
+            <div className="sticky top-16 z-20  mb-3 pb-3  bg-white">
+              <div
+                className="
               grid grid-cols-2 sm:grid-cols-4 gap-4
-              mb-6 pb-6
               border-b border-slate-200
-              bg-white
               py-4
               "
-            >
-              <div>
-                <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
-                  Estado
-                </p>
-                <p className="text-sm font-medium text-slate-900">
-                  {quotation.quotation.status_label}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
-                  Moneda
-                </p>
-                <p className="text-sm font-medium text-slate-900">
-                  {quotation.quotation.currency_code}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
-                  Total
-                </p>
-                <p className="text-sm font-medium text-slate-900">
-                  {totalItems.toFixed(2)}
-                </p>
+              >
+                <div>
+                  <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
+                    Estado
+                  </p>
+                  <p className="text-sm font-medium text-slate-900">
+                    {quotation.quotation.status_label}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
+                    Moneda
+                  </p>
+                  <p className="text-sm font-medium text-slate-900">
+                    {quotation.quotation.currency_code}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
+                    Total
+                  </p>
+                  <p className="text-sm font-medium text-slate-900">
+                    {totalItems.toFixed(2)}
+                  </p>
+                </div>
               </div>
 
-              {quotation.quotation.status === "REVIEWED" && (
-                <div className="">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
-                    Acciones a realizar
+              <div>
+                {(quotation.quotation.status === "CREATED" ||
+                  quotation.quotation.status === "REVIEWED") && (
+                  <p className="text-xs text-slate-500 uppercase tracking-wide mt-1">
+                    Acciones
                   </p>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      disabled={loadingAction !== null}
-                      className="cursor-pointer"
-                      onClick={() => handleActionChanges("CANCELLED")}
-                    >
-                      {loadingAction === "CANCELLED" ? (
-                        <Spinner data-icon="inline-start" />
-                      ) : (
-                        <IoClose />
-                      )}
-                      Cancelar
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      disabled={loadingAction !== null}
-                      className="cursor-pointer"
-                      onClick={() => handleActionChanges("CONFIRMED")}
-                    >
-                      {loadingAction === "CONFIRMED" ? (
-                        <Spinner data-icon="inline-start" />
-                      ) : (
-                        <FaCheck />
-                      )}
-                      Aceptar Cotización
-                    </Button>
-                  </div>
+                )}
+
+                <div className="flex gap-2 mt-3">
+                  {quotation.quotation.status === "CREATED" && (
+                    <div className="">
+                      <ModalAddItems addItem={addItem} status={isDisabled} />
+                    </div>
+                  )}
+                  {hasChanges && (
+                    <div className="">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="destructive"
+                            disabled={isLoadingFetch}
+                            onClick={handleSaveChanges}
+                            className="cursor-pointer"
+                          >
+                            {isLoadingFetch ? (
+                              <Spinner className="h-7 w-7" />
+                            ) : (
+                              <>
+                                <IoSaveOutline className="h-7 w-7" /> Guardar
+                              </>
+                            )}
+                          </Button>
+                        </TooltipTrigger>
+
+                        <TooltipContent side="left">
+                          Guardar cambios
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  )}
+                  {quotation.quotation.status === "REVIEWED" && (
+                    <div className="">
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          disabled={loadingAction !== null}
+                          className="cursor-pointer"
+                          onClick={() => handleActionChanges("CANCELLED")}
+                        >
+                          {loadingAction === "CANCELLED" ? (
+                            <Spinner data-icon="inline-start" />
+                          ) : (
+                            <IoClose />
+                          )}
+                          Cancelar
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          disabled={loadingAction !== null}
+                          className="cursor-pointer"
+                          onClick={() => handleActionChanges("CONFIRMED")}
+                        >
+                          {loadingAction === "CONFIRMED" ? (
+                            <Spinner data-icon="inline-start" />
+                          ) : (
+                            <FaCheck />
+                          )}
+                          Aceptar Cotización
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
 
             {itemsQuotations && itemsQuotations.length > 0 ? (
@@ -288,42 +325,6 @@ export const DetailsQuotationView = ({
               <p className="text-sm text-slate-500 italic text-center">
                 No hay productos en esta cotización
               </p>
-            )}
-
-            {quotation.quotation.status === "CREATED" && (
-              <div className="fixed bottom-6 right-6 z-50">
-                <ModalAddItems addItem={addItem} status={isDisabled} />
-              </div>
-            )}
-            {hasChanges && (
-              <div className="fixed bottom-24 right-6 z-50">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      size="icon"
-                      variant="destructive"
-                      disabled={isLoadingFetch}
-                      onClick={handleSaveChanges}
-                      className="
-                      h-13 w-13
-                      rounded-full
-                      shadow-xl
-                      hover:scale-105
-                      transition-all
-                      duration-200
-                    "
-                    >
-                      {isLoadingFetch ? (
-                        <Spinner className="h-7 w-7" />
-                      ) : (
-                        <IoSaveOutline className="h-7 w-7" />
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-
-                  <TooltipContent side="left">Guardar cambios</TooltipContent>
-                </Tooltip>
-              </div>
             )}
           </div>
         )

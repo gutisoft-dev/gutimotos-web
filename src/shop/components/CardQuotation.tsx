@@ -37,9 +37,11 @@ export const CardQuotation = ({
 
         {/* Información */}
         <div className="mt-2 text-center space-y-1">
-          <h3 className="font-medium text-sm line-clamp-2">
+         <div className="h-10">
+           <h3 className="font-medium text-sm line-clamp-2">
             {item.product_description}
           </h3>
+         </div>
 
           <p className="text-xs text-muted-foreground">
             Código: {item.product_code}

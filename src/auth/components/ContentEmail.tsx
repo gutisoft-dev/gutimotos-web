@@ -76,10 +76,10 @@ export const ContentEmail = ({ handleSection, handleEmail }: Props) => {
             <Spinner />
           ) : (
             <Button
-              variant="ghost"
+              variant="secondary"
               size="icon"
               aria-label="Submit"
-              className="cursor-pointer"
+              className="cursor-pointer py-2"
               onClick={handleSubmit(handleOtpRequest)}
             >
               <GoArrowRight />

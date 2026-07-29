@@ -80,9 +80,9 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
 
           <div className="flex gap-8">
             {/* Filters Sidebar - Desktop */}
-            <div className="hidden lg:block">
-              <FilterSidebar replacement={true} type="sparepart" />
-            </div>
+            <aside className="hidden lg:block sticky top-20 w-64 shrink-0 max-h-[calc(100vh-9rem)] overflow-y-auto pr-2">
+              <FilterSidebar replacement type="sparepart" />
+            </aside>
 
             {/* Mobile Filters */}
             {showFilters && (
@@ -152,7 +152,6 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
           product_description={product_description}
           detail={detail}
         />
-        
       </section>
     </>
   );
