@@ -142,7 +142,7 @@ export const ReplacementCard = ({
                 size="sm"
                 variant="outline"
                 onClick={handleOpenDialog}
-                className="cursor-pointer transition-all duration-300 hover:bg-primary hover:text-primary-foreground border-primary/20 text-xs px-4 py-2 h-8"
+                className="cursor-pointer w-full md:w-auto transition-all duration-300 hover:bg-primary hover:text-primary-foreground border-primary/20 text-xs px-4 py-2 h-8"
               >
                 Explorar producto
               </Button>

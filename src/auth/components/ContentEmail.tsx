@@ -34,7 +34,7 @@ export const ContentEmail = ({ handleSection, handleEmail }: Props) => {
       await OtpRequest(data.email);
       toast.success("Codigo OTP enviado al correo", {
         position: "top-right",
-         style: {
+        style: {
           width: "280px",
           fontSize: "14px",
         },
@@ -57,39 +57,42 @@ export const ContentEmail = ({ handleSection, handleEmail }: Props) => {
 
   return (
     <div>
-      <InputGroup className={`h-10 ${errors.email ? "border-red-500" : ""}`}>
-        <InputGroupInput
-          placeholder="ingresa tu correo"
-          {...register("email", {
-            required: "El correo es obligatorio",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Correo no válido",
-            },
-          })}
-        />
-        <InputGroupAddon>
-          <MdEmail />
-        </InputGroupAddon>
-        <InputGroupAddon align="inline-end">
-          {isposting ? (
-            <Spinner />
-          ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Submit"
-              className="cursor-pointer"
-              onClick={handleSubmit(handleOtpRequest)}
-            >
-              <GoArrowRight />
-            </Button>
-          )}
-        </InputGroupAddon>
-      </InputGroup>
-      {errors.email && (
-        <p className="text-sm text-red-500 font-medium">{errors.email.message}</p>
-      )}
+      <form onSubmit={handleSubmit(handleOtpRequest)}>
+        <InputGroup className={`h-10 ${errors.email ? "border-red-500" : ""}`}>
+          <InputGroupInput
+            placeholder="ingresa tu correo"
+            {...register("email", {
+              required: "El correo es obligatorio",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Correo no válido",
+              },
+            })}
+          />
+          <InputGroupAddon>
+            <MdEmail />
+          </InputGroupAddon>
+          <InputGroupAddon align="inline-end">
+            {isposting ? (
+              <Spinner />
+            ) : (
+              <Button
+                variant="secondary"
+                size="icon"
+                type="submit"
+                className="cursor-pointer py-2"
+              >
+                <GoArrowRight />
+              </Button>
+            )}
+          </InputGroupAddon>
+        </InputGroup>
+        {errors.email && (
+          <p className="text-sm text-red-500 font-medium">
+            {errors.email.message}
+          </p>
+        )}
+      </form>
     </div>
   );
 };

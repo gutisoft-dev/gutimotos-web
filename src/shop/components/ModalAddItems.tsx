@@ -21,16 +21,8 @@ export const ModalAddItems = ({ addItem,status }: Prop) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" disabled={status}  className="
-            h-13 w-13
-            rounded-full
-            shadow-xl
-            hover:scale-105
-            transition-all
-            duration-200
-            cursor-pointer
-          ">
-          <IoAddOutline /> 
+        <Button variant="outline" disabled={status}  className="cursor-pointer ">
+          <IoAddOutline /> Agregar
         </Button>
       </DialogTrigger>
       <DialogContent className="lg:max-w-4xl">
