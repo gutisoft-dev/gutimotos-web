@@ -34,7 +34,6 @@ export const DetailsQuotationView = ({
     isLoading,
     refetch,
   } = useDetailsQuotation(quotationId);
-  console.log(quotation);
   const [itemsQuotations, setItemsQuotations] = useState<Item[]>([]);
   const [isLoadingFetch, setIsLoadingFetch] = useState(false);
   const [loadingAction, setLoadingAction] = useState<
