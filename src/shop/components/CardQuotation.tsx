@@ -28,7 +28,7 @@ export const CardQuotation = ({
         <div className="w-full">
           <div className="w-full aspect-square rounded-lg overflow-hidden bg-muted border">
             <img
-              src="https://gutimotos.s3.amazonaws.com/media/fotos/productos/141198/71e1e32a6a7f498290c0b4ee9efcae72.webp"
+              src={item.photo}
               alt={item.product_description}
               className="w-full h-full object-cover"
             />

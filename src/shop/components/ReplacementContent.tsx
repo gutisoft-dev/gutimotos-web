@@ -31,7 +31,7 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
 
   return (
     <>
-      <section className="py-4 px-4 lg:px-8">
+      <section className=" px-4 lg:px-8">
         <div className="container mx-auto">
           <div className="sticky top-16 z-10 bg-white p-2.5">
             <div className="flex items-center justify-between mb-2">
@@ -80,8 +80,10 @@ export const ReplacementContent = ({ replacements, isloading }: Props) => {
 
           <div className="flex gap-8">
             {/* Filters Sidebar - Desktop */}
-            <aside className="hidden lg:block sticky top-20 w-64 shrink-0 max-h-[calc(100vh-9rem)] overflow-y-auto pr-2">
-              <FilterSidebar replacement type="sparepart" />
+            <aside className="hidden lg:block w-64 shrink-0 sticky top-35 self-start">
+              <div className="max-h-[calc(100vh-5rem)] overflow-y-auto pr-2">
+                <FilterSidebar replacement type="sparepart" />
+              </div>
             </aside>
 
             {/* Mobile Filters */}
