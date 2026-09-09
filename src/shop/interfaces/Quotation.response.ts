@@ -42,6 +42,7 @@ export interface Item {
     quantity:            number;
     unit_price:          string;
     subtotal:            string;
+    photo:               string;
 }
 
 export interface Quotation {
@@ -49,6 +50,7 @@ export interface Quotation {
     status:        string;
     status_label:  string;
     currency_code: string;
+    expired:       string;
     subtotal:      string;
     total:         string;
 }

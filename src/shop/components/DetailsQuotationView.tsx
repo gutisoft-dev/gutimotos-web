@@ -21,6 +21,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { FaWhatsapp } from "react-icons/fa";
+import { getExpirationCountdown } from "@/helpers/expirationDate";
+import { PaginationQuotation } from "./PaginationQuotation";
 export const DetailsQuotationView = ({
   quotationId,
 }: {
@@ -170,6 +173,17 @@ export const DetailsQuotationView = ({
       setLoadingAction(null);
     }
   };
+
+  const handleRedirectTowhatsapp = () => {
+    const message = `Te envío un pequeño recordatorio para consultar si pudiste revisar la cotización que te envié anteriormente.
+Código de cotización: ${quotation?.quotation.id}`;
+    const phoneNumber = "59167398260";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message,
+    )}`;
+    window.open(url, "_blank");
+  };
+
   return (
     <>
       {isLoading ? (
@@ -182,7 +196,7 @@ export const DetailsQuotationView = ({
             <div className="sticky top-16 z-20  mb-3 pb-3  bg-white">
               <div
                 className="
-              grid grid-cols-2 sm:grid-cols-4 gap-4
+              grid grid-cols-2 sm:grid-cols-5 gap-4
               border-b border-slate-200
               py-4
               "
@@ -211,6 +225,15 @@ export const DetailsQuotationView = ({
                     {totalItems.toFixed(2)}
                   </p>
                 </div>
+                <div>
+                  <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
+                    Expira en
+                  </p>
+                  <p className="text-sm font-medium text-slate-900">
+                    {getExpirationCountdown(quotation.quotation.expired)}
+                  </p>
+                </div>
+                <div></div>
               </div>
 
               <div>
@@ -221,7 +244,7 @@ export const DetailsQuotationView = ({
                   </p>
                 )}
 
-                <div className="flex gap-2 mt-3">
+                <div className="flex flex-wrap gap-2 mt-3">
                   {quotation.quotation.status === "CREATED" && (
                     <div className="">
                       <ModalAddItems addItem={addItem} status={isDisabled} />
@@ -285,6 +308,12 @@ export const DetailsQuotationView = ({
                       </div>
                     </div>
                   )}
+                  <Button
+                    className="cursor-pointer"
+                    onClick={() => handleRedirectTowhatsapp()}
+                  >
+                    <FaWhatsapp /> Enviar recordatorio
+                  </Button>
                 </div>
               </div>
             </div>
@@ -296,9 +325,7 @@ export const DetailsQuotationView = ({
                   itemsQuotations.map((item) => (
                     <CardRevied
                       key={item.product_code}
-                      image={
-                        "https://gutimotos.s3.amazonaws.com/media/fotos/productos/141198/71e1e32a6a7f498290c0b4ee9efcae72.webp"
-                      }
+                      image={item.photo}
                       amount={item.quantity}
                       name={item.product_description}
                       price={item.unit_price}
@@ -320,6 +347,7 @@ export const DetailsQuotationView = ({
                     ))}
                   </div>
                 )}
+                <PaginationQuotation total_pages={quotation.total_pages}/>
               </div>
             ) : (
               <p className="text-sm text-slate-500 italic text-center">

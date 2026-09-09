@@ -14,7 +14,7 @@ export const CustomPagination = ({ next_cursor, previous_cursor }: Props) => {
     setSearchParams(searchParams);
   };
   return (
-    <div className="flex items-center justify-center space-x-5 mb-10">
+    <div className="flex items-center justify-center space-x-5 mb-10 mt-10">
       <Button
         variant="outline"
         size="sm"

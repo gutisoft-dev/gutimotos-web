@@ -51,9 +51,10 @@ export const getQuotations = async (): Promise<QuotationResponse> => {
 
 export const getDetailsQuotation = async (
   id: string,
+  page: string = "1",
 ): Promise<DetailsQuotation> => {
   const { data } = await gutiMotors.get<QuotationResponse>(
-    `/quotations/api/quotation/${id}/items/?page=1 `,
+    `/quotations/api/quotation/${id}/items/?page=${page}`,
   );
   return data;
 };
