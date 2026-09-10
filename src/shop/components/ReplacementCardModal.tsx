@@ -72,6 +72,7 @@ export const ReplacementCardModal = ({
               variant="default"
               onClick={() =>
                 handleAddItems({
+                  photo,
                   product_code,
                   product_description,
                   quantity: 1,
