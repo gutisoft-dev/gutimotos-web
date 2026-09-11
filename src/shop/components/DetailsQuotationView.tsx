@@ -188,6 +188,7 @@ Código de cotización: ${quotation?.quotation.id}`;
     <>
       {isLoading ? (
         <ContentLoading />
+        
       ) : quotation && quotation.items.length === 0 ? (
         <EmptyContent />
       ) : (
